@@ -1,0 +1,25 @@
+{
+  "name": "DisplayHowrare",
+  "description": "Display Howrare rarity on compatible items",
+  "action": {},
+  "manifest_version": 3,
+  "version": "0.1",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "webNavigation"
+  ],
+  "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/favicon-48x48.png",
+    "128": "images/favicon-128x128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [{ 
+    "resources": ["/solbears.json"],
+    "matches": ["<all_urls>"]
+  }]
+}
