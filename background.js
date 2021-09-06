@@ -27,7 +27,7 @@ function triggerHowrare() {
               .then((roxes) => {
                 items.forEach(domItem => {
                   if (!domItem.isRarityDisplayed) {
-                    itemId = domItem.innerText.replace(/[^0-9]/g,'');
+                    itemId = parseInt(domItem.innerText.replace(/[^0-9]/g,''));
                     if (roxes[itemId]) {
                       domItem.innerText = domItem.innerText + " (rarity: " + roxes[itemId] + ")";
                     } else {
