@@ -37,6 +37,24 @@ function triggerHowrare() {
                 }
             })
           });
+        } else if (collection == "Solana%20Souls") {
+          const url = chrome.runtime.getURL('/rarity/solsouls.json');
+
+          fetch(url)
+              .then((response) => response.json()) //assuming file contains json
+              .then((souls) => {
+                items.forEach(domItem => {
+                  if (!domItem.isRarityDisplayed) {
+                    itemName = domItem.innerText;
+                    if (souls[itemName]) {
+                      domItem.innerText = domItem.innerText + " (rarity: " + souls[itemName] + ")";
+                    } else {
+                      domItem.innerText = domItem.innerText + " (rarity: random)";
+                    }
+                    domItem.isRarityDisplayed = true;
+                }
+            })
+          });
         } else {
           console.error('Collection has not been added yet.')
         }
