@@ -1,22 +1,45 @@
 function triggerHowrare() {
-  if (window.location.href.normalize() == "https://digitaleyes.market/collections/SolBear".normalize()) {
+  if (window.location.href.normalize().includes("https://digitaleyes.market/collections/".normalize())) {
     function displayHowrare() {
+      var collection = window.location.href.split('/')[4]
       items = Array.prototype.slice.call(document.querySelectorAll('p'))
         .filter(domElt => /\d/.test(domElt.innerText))
-      
-        const url = chrome.runtime.getURL('/solbears.json');
+        console.log(collection)
+        if (collection == "SolBear") {
+          const url = chrome.runtime.getURL('/rarity/solbears.json');
     
-        fetch(url)
-            .then((response) => response.json()) //assuming file contains json
-            .then((solbears) => {
-              items.forEach(domItem => {
-                if (!domItem.isRarityDisplayed) {
-                  itemId = domItem.innerText.replace(/[^0-9]/g,'');
-                  domItem.innerText = domItem.innerText + " (rarity: " + solbears[itemId] + ")";
-                  domItem.isRarityDisplayed = true;
-              }
-          })
-        });
+          fetch(url)
+              .then((response) => response.json()) //assuming file contains json
+              .then((solbears) => {
+                items.forEach(domItem => {
+                  if (!domItem.isRarityDisplayed) {
+                    itemId = domItem.innerText.replace(/[^0-9]/g,'');
+                    domItem.innerText = domItem.innerText + " (rarity: " + solbears[itemId] + ")";
+                    domItem.isRarityDisplayed = true;
+                }
+            })
+          });
+        } else if (collection == "Rox") {
+          const url = chrome.runtime.getURL('/rarity/rox.json');
+    
+          fetch(url)
+              .then((response) => response.json()) //assuming file contains json
+              .then((roxes) => {
+                items.forEach(domItem => {
+                  if (!domItem.isRarityDisplayed) {
+                    itemId = domItem.innerText.replace(/[^0-9]/g,'');
+                    if (roxes[itemId]) {
+                      domItem.innerText = domItem.innerText + " (rarity: " + roxes[itemId] + ")";
+                    } else {
+                      domItem.innerText = domItem.innerText + " (rarity: random)";
+                    }
+                    domItem.isRarityDisplayed = true;
+                }
+            })
+          });
+        } else {
+          console.error('Collection has not been added yet.')
+        }
     }
 
     window.addEventListener('scroll', function(e) {

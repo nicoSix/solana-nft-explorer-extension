@@ -19,7 +19,7 @@
     "service_worker": "background.js"
   },
   "web_accessible_resources": [{ 
-    "resources": ["/solbears.json"],
+    "resources": ["/rarity/*"],
     "matches": ["<all_urls>"]
   }]
 }
