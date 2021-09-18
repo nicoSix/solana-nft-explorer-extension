@@ -1,11 +1,3 @@
-# BlurImage
-Chrome extension to hide images from Quora (To avoid explicit content)
-
-To use this extension locally 
-
-Download this Repository ZIP.
-
-Go to this link:
-https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually
-
-Follow the instruction from step 4
+# Solana NFT explorer Chrome extension
+This extension is able to enhance the information displayed on DigitalEyes for NFTs at sale: rarity and collection type.
+Disclaimer: currently unstable, can make Chrome crash
