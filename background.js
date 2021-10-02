@@ -1,9 +1,14 @@
 function triggerHowrare() {
   function getColor(value){
-    if(value <= 0.20)
-      return "rgb(0," + Math.round(20+value*1000) + ",0)";
+    if(value < 0.20)
+    	return "rgb(0," + Math.round(50+value*1000) + ",0)";
     var hue=((1-value)*110).toString(10);
-    return ["hsl(",hue,",30%,50%)"].join("");
+    return ["hsl(",hue,",50%,60%)"].join("");
+  }
+  function getWeight(value){
+    if(value > 0.85)
+    	return 135;
+    return (1-value)*900;
   }
 
   if (window.location.href.normalize().includes("https://digitaleyes.market/collections/".normalize())
@@ -102,6 +107,7 @@ function triggerHowrare() {
                   let pc = smb[itemId]/5000;
                   domItem.innerText = domItem.innerText + " (top " + Math.round(pc*100) + "%)";
                   domItem.style.color = getColor(pc);
+                  domItem.style.fontWeight = getWeight(pc);
                   domItem.isRarityDisplayed = true;
               }
           })
