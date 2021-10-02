@@ -5,7 +5,7 @@ import json
 
 def getRarities(pageId):
     partial_rarities = {}
-    page = requests.get("https://howrare.is/solbears/?page=" + str(pageId) + "&ids=&sort_by=rank")
+    page = requests.get("https://howrare.is/smb/?page=" + str(pageId) + "&ids=&sort_by=rank")
     soup = BeautifulSoup(page.text, 'html.parser')
     items = soup.find_all("div", {"class":"nft-details"})
     for item in items:
