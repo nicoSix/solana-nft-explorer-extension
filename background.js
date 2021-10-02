@@ -27,13 +27,39 @@ function triggerHowrare() {
               items.forEach(domItem => {
                 if (!domItem.isRarityDisplayed && domItem.innerText.includes('#')) {
                   itemId = parseInt(domItem.innerText.replace(/[^0-9]/g,''));
-                  if (roxes[itemId]) {
-                    domItem.innerText = domItem.innerText + " (rarity: " + roxes[itemId] + ")";
+                  if (roxes[itemId] && roxes[itemId] < 40) {
+                    domItem.innerText = domItem.innerText + " (rank: " + roxes[itemId] + ")";
                   } else {
-                    domItem.innerText = domItem.innerText + " (rarity: random)";
+                    //domItem.innerText = domItem.innerText + " (rank: unknown)";
+                    domItem.parentNode.parentNode.parentNode.parentNode.remove();
                   }
                   domItem.isRarityDisplayed = true;
               }
+          })
+        });
+      } else if (window.location.href.includes("SUNKS")) {
+        const url_first = chrome.runtime.getURL('/rarity/sunks_first.json');
+        const url_rarity = chrome.runtime.getURL('/rarity/sunks_rarity.json');
+
+        fetch(url_first)
+            .then((response) => response.json()) //assuming file contains json
+            .then((sunks) => {
+              fetch(url_rarity)
+                .then((response) => response.json())
+                .then((rarity) => {
+                  items.forEach(domItem => {
+                    if (!domItem.isRarityDisplayed && domItem.innerText.includes('SUNK')) {
+                      itemId = parseInt(domItem.innerText.replace(/[^0-9]/g,''));
+                      console.log(rarity, itemId)
+                      if (sunks.includes(parseInt(itemId))) {
+                        domItem.innerText = domItem.innerText + " (first drop, rarity: " + rarity[itemId] + ")";
+                      } else {
+                        domItem.innerText = domItem.innerText + " (second drop, rarity: " + rarity[itemId] + ")";
+                        //domItem.parentNode.parentNode.parentNode.parentNode.remove();
+                      }
+                      domItem.isRarityDisplayed = true;
+                  }
+                })
           })
         });
       } else if (window.location.href.includes("Solana%20Souls")) {
