@@ -1,5 +1,18 @@
 function triggerHowrare() {
-  if (window.location.href.normalize().includes("https://digitaleyes.market/collections/".normalize())) {
+  function getColor(value){
+    if(value < 0.20)
+    	return "rgb(0," + Math.round(50+value*1000) + ",0)";
+    var hue=((1-value)*110).toString(10);
+    return ["hsl(",hue,",50%,60%)"].join("");
+  }
+  function getWeight(value){
+    if(value > 0.85)
+    	return 135;
+    return (1-value)*900;
+  }
+
+  if (window.location.href.normalize().includes("https://digitaleyes.market/collections/".normalize())
+   || window.location.href.normalize().includes("https://market.solanamonkey.business/".normalize())) {
     function displayHowrare() {
       items = Array.prototype.slice.call(document.querySelectorAll('p'))
         .filter(domElt => /\d/.test(domElt.innerText))
@@ -76,6 +89,25 @@ function triggerHowrare() {
                   } else {
                     domItem.innerText = domItem.innerText + " (rarity: random)";
                   }
+                  domItem.isRarityDisplayed = true;
+              }
+          })
+        });
+      } else if (window.location.href.includes("solanamonkey.business")) {
+        items = Array.prototype.slice.call(document.querySelectorAll('h3'))
+          .filter(domElt => /\d/.test(domElt.innerText))
+        const url = chrome.runtime.getURL('/rarity/smb.json');
+  
+        fetch(url)
+            .then((response) => response.json()) //assuming file contains json
+            .then((smb) => {
+              items.forEach(domItem => {
+                if (!domItem.isRarityDisplayed && domItem.innerText.includes('#')) {
+                  let itemId = domItem.innerText.replace(/[^0-9]/g,'');
+                  let pc = smb[itemId]/5000;
+                  domItem.innerText = domItem.innerText + " (top " + Math.round(pc*100) + "%)";
+                  domItem.style.color = getColor(pc);
+                  domItem.style.fontWeight = getWeight(pc);
                   domItem.isRarityDisplayed = true;
               }
           })
